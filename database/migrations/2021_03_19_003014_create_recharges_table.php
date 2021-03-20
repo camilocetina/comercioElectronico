@@ -15,6 +15,11 @@ class CreateRechargesTable extends Migration
     {
         Schema::create('recharges', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('supplier_id')->references('id')->on('suppliers');
+            $table->foreignId('product_id')->references('id')->on('products');
+            $table->integer('amount');
+            $table->boolean('state');
+            $table->enum('priority',['baja','media','alta']);
             $table->timestamps();
         });
     }

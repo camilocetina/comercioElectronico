@@ -15,6 +15,11 @@ class CreateSupliersTable extends Migration
     {
         Schema::create('supliers', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('lastname');
+            $table->integer('document');
+            $table->bigInteger('phone');
+            $table->string('direction');
             $table->timestamps();
         });
     }
