@@ -20,6 +20,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+      
         $credentials = $request->only('email','password');
         try{
             if(!$token = JWTAuth::attempt($credentials))
@@ -32,9 +33,17 @@ class AuthController extends Controller
             return response()->json(['success'=>false,'error' => 'no puede crear el JWT'],500);
         }
 
-    
-
         return response()->json(['success'=>true,'token' => $token],200);
+     
+    }
+    /**
+     * 
+     * Validate Token
+     * 
+    */
+    public function checkToken()
+    {
+        return response()->json(['success'=>true],200);
     }
     /**
      * register user
