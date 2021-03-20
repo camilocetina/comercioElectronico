@@ -23,6 +23,7 @@ Route::group(['namespace'=>'Api'],function(){
     Route::post('logout','AuthController@register');
     Route::post('logout','AuthController@logout');
     Route::post('register','AuthController@register');
+    Route::post('checkToken','AuthController@checkToken');
     /**
      * 
      * Admin routes
