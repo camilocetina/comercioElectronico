@@ -15,6 +15,7 @@ class CreateRechargesTable extends Migration
     {
         Schema::create('recharges', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('suplier_id')->references('id')->on('supliers');
             $table->foreignId('product_id')->references('id')->on('products');
             $table->integer('amount');
