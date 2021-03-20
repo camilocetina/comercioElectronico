@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
 
-    public function __construnct()
+    public function __construct()
     {
         $this->middleware('jwt.verify');
     }

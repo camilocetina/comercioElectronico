@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\User;
 
 
 
@@ -14,7 +15,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['jwt.verify'])->except('login');
+        $this->middleware(['jwt.verify'])->except(['login','register']);
     }
 
     public function login(Request $request)
@@ -36,13 +37,16 @@ class AuthController extends Controller
         return response()->json(['success'=>true,'token' => $token],200);
     }
     /**
-     * validate toke JWT
+     * register user
      * 
     */
-    public function checkToken()
+    public function register()
     {
-        return response()->json(['success'=>true],200);
+        $user = new User(request()->all());
+        $user->password = bcrypt($user->password);
+        $user->save();
     }
+
 
     public function Logout()
 

@@ -20,8 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace'=>'Api'],function(){
     Route::post('login','AuthController@login');
-    Route::post('checkToken','AuthController@checkToken');
+    Route::post('logout','AuthController@register');
     Route::post('logout','AuthController@logout');
+    Route::post('register','AuthController@register');
     /**
      * 
      * Admin routes
