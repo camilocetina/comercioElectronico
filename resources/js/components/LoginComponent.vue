@@ -1,11 +1,11 @@
 <template>
   <div>
     <div v-if="loading === true">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-grow" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
+      </div>
     </div>
     <div class="login" v-else>
       <form class="form">
@@ -29,8 +29,8 @@
             v-model="credentials.password"
           />
         </div>
-        <button class="btn btn-primary btn-block" @click.prevent="login">
-          Login
+        <button class="btn button-home-color btn-block" @click.prevent="login">
+          Ingreso Admin
         </button>
       </form>
     </div>
@@ -74,8 +74,8 @@ export default {
         .post("/api/login", this.credentials)
         .then((res) => {
           if (res.data.success) {
-                this.$store.commit("setToken", res.data.token);
-                this.$router.push("/dashboard");
+            this.$store.commit("setToken", res.data.token);
+            this.$router.push("/dashboard");
           }
         })
         .catch((err) => {});
@@ -91,5 +91,9 @@ export default {
   padding: 20px;
   margin: 50px auto;
   border-radius: 10px;
+}
+.button-home-color {
+  background-color: rgb(70, 16, 16);
+  color: #fff;
 }
 </style>
