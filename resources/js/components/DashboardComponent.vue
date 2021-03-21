@@ -18,7 +18,7 @@
           v-model="getData.id"
           @keyup="searchOrder"
         />
-        <input type="date" class="form-control" v-model="getData.date_delivery" />
+        <input type="date" class="form-control" v-model="getData.date_delivery" @change="searchOrderByDate"/>
       </form>
       <br />
       <table class="table table-striped table-bordered">
@@ -29,19 +29,21 @@
             <th scope="col">Cod Producto</th>
             <th scope="col">Cantidad</th>
             <th scope="col">Valor</th>
+            <th scope="col">Fecha de entrega</th>
             <th scope="col">Prioridad</th>
             <th scope="col">Estado</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>1108456404</td>
-            <td>123456</td>
-            <td>10</td>
-            <td>200.000</td>
-            <td>baja</td>
-            <td>Pendiente</td>
+          <tr v-for="(order, id) in orders" :key="id">
+            <th scope="row">{{order.id}}</th>
+            <td>{{order.client_id}}</td>
+            <td>{{order.product_id}}</td>
+            <td>{{order.cant}}</td>
+            <td>{{order.value}}</td>
+            <td>{{order.dateDelivery}}</td>
+            <td>{{order.priority}}</td>
+            <td>{{order.state}}</td>
           </tr>
         </tbody>
       </table>
@@ -61,9 +63,12 @@ export default {
        },
         setTimeOutOrder: "",
         loading: true,
+        orders:[]
     };
   },
   mounted() {
+    this.uploadAllOrders();
+ 
     if (this.$store.state.token !== "") {
       axios
         .post("/api/checkToken", { token: this.$store.state.token })
@@ -102,19 +107,45 @@ export default {
         'id' : this.getData.id,
         'date_delivery' : this.getData.date_delivery
     }
-       axios.post("/api/orders",params)
+       axios.post("/api/pedidos",params)
         .then(res=>{
-            console.log(res.data);
+            this.orders = res.data;
         }).catch(err =>{
             console.log(err)
         })
-    console.log(params)
+        console.log(this.orders)
     },
     
     searchOrder(){
         clearTimeout( this.setTimeOutOrder )
         this.setTimeOutOrder = setTimeout(this.getOrders,360)
+
     },
+    uploadAllOrders()
+    {
+      let data;
+      axios.get('/api/pedidos/todos')
+      .then(res =>{
+        data = res.data
+        this.orders = data;
+      })
+      .catch(err =>{
+        consoel.log(err)
+      })
+    },
+    searchOrderByDate()
+    {
+      const params = {
+        'id' : this.getData.id,
+        'date_delivery' : this.getData.date_delivery
+    }
+      console.log(params)
+      axios.post('/api/pedidos',params)
+      .then(res =>{
+        this.orders = res.data
+      })
+
+    }
     
   },
 };

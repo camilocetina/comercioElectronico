@@ -24,6 +24,7 @@ Route::group(['namespace'=>'Api'],function(){
     Route::post('logout','AuthController@logout');
     Route::post('register','AuthController@register');
     Route::post('checkToken','AuthController@checkToken');
+
     /**
      * 
      * Admin routes
@@ -31,10 +32,12 @@ Route::group(['namespace'=>'Api'],function(){
     */
     Route::post('admin','AdminController@index');
 
+
 });
     /**
      * 
      * Orders route
      * 
     */
-    Route::post('orders','OrderController@getData');
+    Route::post('pedidos','OrderController@getOrderByIdOrDate');
+    Route::get('pedidos/todos','OrderController@getAllOrders');

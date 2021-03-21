@@ -2007,6 +2007,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DashboardComponent",
   data: function data() {
@@ -2016,11 +2018,14 @@ __webpack_require__.r(__webpack_exports__);
         date_delivery: ""
       },
       setTimeOutOrder: "",
-      loading: true
+      loading: true,
+      orders: []
     };
   },
   mounted: function mounted() {
     var _this = this;
+
+    this.uploadAllOrders();
 
     if (this.$store.state.token !== "") {
       axios.post("/api/checkToken", {
@@ -2058,21 +2063,46 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getOrders: function getOrders() {
+      var _this3 = this;
+
       // ,this.getData
       var params = {
         'id': this.getData.id,
         'date_delivery': this.getData.date_delivery
       };
-      axios.post("/api/orders", params).then(function (res) {
-        console.log(res.data);
+      axios.post("/api/pedidos", params).then(function (res) {
+        _this3.orders = res.data;
       })["catch"](function (err) {
         console.log(err);
       });
-      console.log(params);
+      console.log(this.orders);
     },
     searchOrder: function searchOrder() {
       clearTimeout(this.setTimeOutOrder);
       this.setTimeOutOrder = setTimeout(this.getOrders, 360);
+    },
+    uploadAllOrders: function uploadAllOrders() {
+      var _this4 = this;
+
+      var data;
+      axios.get('/api/pedidos/todos').then(function (res) {
+        data = res.data;
+        _this4.orders = data;
+      })["catch"](function (err) {
+        consoel.log(err);
+      });
+    },
+    searchOrderByDate: function searchOrderByDate() {
+      var _this5 = this;
+
+      var params = {
+        'id': this.getData.id,
+        'date_delivery': this.getData.date_delivery
+      };
+      console.log(params);
+      axios.post('/api/pedidos', params).then(function (res) {
+        _this5.orders = res.data;
+      });
     }
   }
 });
@@ -20816,6 +20846,7 @@ var render = function() {
           attrs: { type: "date" },
           domProps: { value: _vm.getData.date_delivery },
           on: {
+            change: _vm.searchOrderByDate,
             input: function($event) {
               if ($event.target.composing) {
                 return
@@ -20828,7 +20859,33 @@ var render = function() {
       _vm._v(" "),
       _c("br"),
       _vm._v(" "),
-      _vm._m(1)
+      _c("table", { staticClass: "table table-striped table-bordered" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.orders, function(order, id) {
+            return _c("tr", { key: id }, [
+              _c("th", { attrs: { scope: "row" } }, [_vm._v(_vm._s(order.id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.client_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.product_id))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.cant))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.value))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.dateDelivery))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.priority))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.state))])
+            ])
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -20847,41 +20904,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table table-striped table-bordered" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Doc Cliente")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cod Producto")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Valor")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Prioridad")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("1108456404")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("123456")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("10")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("200.000")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("baja")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Pendiente")])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Doc Cliente")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cod Producto")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Valor")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha de entrega")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Prioridad")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
       ])
     ])
   }
@@ -38113,15 +38152,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************!*\
   !*** ./resources/js/components/LoginComponent.vue ***!
   \****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LoginComponent_vue_vue_type_template_id_4d2414bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=template&id=4d2414bf&scoped=true& */ "./resources/js/components/LoginComponent.vue?vue&type=template&id=4d2414bf&scoped=true&");
 /* harmony import */ var _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/LoginComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _LoginComponent_vue_vue_type_style_index_0_id_4d2414bf_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=style&index=0&id=4d2414bf&scoped=true&lang=css& */ "./resources/js/components/LoginComponent.vue?vue&type=style&index=0&id=4d2414bf&scoped=true&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _LoginComponent_vue_vue_type_style_index_0_id_4d2414bf_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=style&index=0&id=4d2414bf&scoped=true&lang=css& */ "./resources/js/components/LoginComponent.vue?vue&type=style&index=0&id=4d2414bf&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -38153,7 +38191,7 @@ component.options.__file = "resources/js/components/LoginComponent.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/LoginComponent.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

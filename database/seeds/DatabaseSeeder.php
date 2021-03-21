@@ -7,6 +7,8 @@ use App\Admin\Inventory;
 use App\Admin\Client;
 use App\Admin\Order;
 use App\Admin\Recharge;
+use App\User;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -24,6 +26,13 @@ class DatabaseSeeder extends Seeder
         factory(Client::class)->times(100)->create();
         factory(Order::class)->times(100)->create();
         factory(Recharge::class)->times(100)->create();
+        // $this->call(AdminSeeder::class);
+
+        $userAdmin = User::create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('12345678'),
+        ]);
         
     }
 }
