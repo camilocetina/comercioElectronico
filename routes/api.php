@@ -31,7 +31,11 @@ Route::group(['namespace'=>'Api'],function(){
      * 
     */
     Route::post('admin','AdminController@index');
+<<<<<<< HEAD
 
+=======
+    Route::post('search','OrderController@searchOrderByIdOrDate');
+>>>>>>> f9b096ac626b221ae7e6847fe9948a9fe79d77b6
 
 });
     /**
