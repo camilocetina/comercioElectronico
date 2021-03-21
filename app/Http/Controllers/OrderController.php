@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function searchOrderByIdOrDate($id,$date)
     {
         $order = $this->orderQuery->getOrderByIdOrDate($id,$date);
+         return response()->json($order);
     }
     
   

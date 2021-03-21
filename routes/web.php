@@ -13,16 +13,6 @@ use App\Services\Order\OrderQuery;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::view('/{app?}','welcome')->where('app','.*');
-/*
-Route::get('prueba',function(){
-$order = new OrderQuery;
-return $order->getOrderByIdOrDate(5,	
-2020-03-29);
-});
 
-/*
