@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         factory(Client::class)->times(100)->create();
         factory(Order::class)->times(100)->create();
         factory(Recharge::class)->times(100)->create();
+        $this->call(AdminSeeder::class);
         
     }
 }

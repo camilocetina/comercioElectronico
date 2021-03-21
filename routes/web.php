@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Services\Order\OrderQuery;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::view('/{app?}','welcome')->where('app','.*');
+/*
+Route::get('prueba',function(){
+$order = new OrderQuery;
+return $order->getOrderByIdOrDate(5,	
+2020-03-29);
+});
+
+/*

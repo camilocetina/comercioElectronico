@@ -12,10 +12,7 @@ $factory->define(Suplier::class, function (Faker $faker) {
         'lastname' => $faker->lastName,
         'document' => $faker->randomNumber,
         'phone'    => $faker->randomNumber,
-        'direction'=> $faker->address,
-       	   
-            
-          
+        'direction'=> $faker->address, 
             
     ];
 });
