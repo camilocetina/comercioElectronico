@@ -31,6 +31,6 @@ Route::group(['namespace'=>'Api'],function(){
      * 
     */
     Route::post('admin','AdminController@index');
-    oute::post('search','OrderController@searchOrderByIdOrDate');
+    Route::post('search','OrderController@searchOrderByIdOrDate');
 
 });
