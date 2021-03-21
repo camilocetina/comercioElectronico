@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace'=>'Api'],function(){
     Route::post('login','AuthController@login');
-    Route::post('logout','AuthController@register');
+    // Route::post('logout','AuthController@register');
     Route::post('logout','AuthController@logout');
     Route::post('register','AuthController@register');
     Route::post('checkToken','AuthController@checkToken');
@@ -30,4 +30,11 @@ Route::group(['namespace'=>'Api'],function(){
      * 
     */
     Route::post('admin','AdminController@index');
+
 });
+    /**
+     * 
+     * Orders route
+     * 
+    */
+    Route::post('orders','OrderController@getData');

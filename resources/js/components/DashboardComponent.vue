@@ -8,7 +8,19 @@
       </div>
     </div>
     <div class="container">
-        <h3>Tabla de pedidos </h3>
+      <h3>Tabla de pedidos</h3>
+      <form class="form-inline my-2 my-lg-0">
+        <input
+          class="form-control mr-sm-2 buscador"
+          type="search"
+          placeholder="Buscar por codigo"
+          aria-label="Search"
+          v-model="getData.id"
+          @keyup="searchOrder"
+        />
+        <input type="date" class="form-control" v-model="getData.date_delivery" />
+      </form>
+      <br />
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
@@ -31,7 +43,6 @@
             <td>baja</td>
             <td>Pendiente</td>
           </tr>
-        
         </tbody>
       </table>
     </div>
@@ -44,7 +55,12 @@ export default {
 
   data() {
     return {
-      loading: true,
+       getData:{
+            id: "",
+            date_delivery: "",
+       },
+        setTimeOutOrder: "",
+        loading: true,
     };
   },
   mounted() {
@@ -70,6 +86,7 @@ export default {
     }
   },
   methods: {
+
     logout() {
       axios
         .post("/api/logout", { token: this.$store.state.token })
@@ -78,6 +95,27 @@ export default {
           this.$router.push("/");
         });
     },
+
+    getOrders(){
+        // ,this.getData
+    const params = {
+        'id' : this.getData.id,
+        'date_delivery' : this.getData.date_delivery
+    }
+       axios.post("/api/orders",params)
+        .then(res=>{
+            console.log(res.data);
+        }).catch(err =>{
+            console.log(err)
+        })
+    console.log(params)
+    },
+    
+    searchOrder(){
+        clearTimeout( this.setTimeOutOrder )
+        this.setTimeOutOrder = setTimeout(this.getOrders,360)
+    },
+    
   },
 };
 </script>

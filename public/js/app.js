@@ -1996,10 +1996,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DashboardComponent",
   data: function data() {
     return {
+      getData: {
+        id: "",
+        date_delivery: ""
+      },
+      setTimeOutOrder: "",
       loading: true
     };
   },
@@ -2040,6 +2056,23 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$router.push("/");
       });
+    },
+    getOrders: function getOrders() {
+      // ,this.getData
+      var params = {
+        'id': this.getData.id,
+        'date_delivery': this.getData.date_delivery
+      };
+      axios.post("/api/orders", params).then(function (res) {
+        console.log(res.data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+      console.log(params);
+    },
+    searchOrder: function searchOrder() {
+      clearTimeout(this.setTimeOutOrder);
+      this.setTimeOutOrder = setTimeout(this.getOrders, 360);
     }
   }
 });
@@ -20739,7 +20772,64 @@ var render = function() {
   return _c("div", [
     this.loading ? _c("div", [_vm._m(0)]) : _vm._e(),
     _vm._v(" "),
-    _vm._m(1)
+    _c("div", { staticClass: "container" }, [
+      _c("h3", [_vm._v("Tabla de pedidos")]),
+      _vm._v(" "),
+      _c("form", { staticClass: "form-inline my-2 my-lg-0" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.getData.id,
+              expression: "getData.id"
+            }
+          ],
+          staticClass: "form-control mr-sm-2 buscador",
+          attrs: {
+            type: "search",
+            placeholder: "Buscar por codigo",
+            "aria-label": "Search"
+          },
+          domProps: { value: _vm.getData.id },
+          on: {
+            keyup: _vm.searchOrder,
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.getData, "id", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.getData.date_delivery,
+              expression: "getData.date_delivery"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "date" },
+          domProps: { value: _vm.getData.date_delivery },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.getData, "date_delivery", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm._m(1)
+    ])
   ])
 }
 var staticRenderFns = [
@@ -20757,44 +20847,40 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("h3", [_vm._v("Tabla de pedidos ")]),
+    return _c("table", { staticClass: "table table-striped table-bordered" }, [
+      _c("thead", [
+        _c("tr", [
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Doc Cliente")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cod Producto")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Valor")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Prioridad")]),
+          _vm._v(" "),
+          _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
+        ])
+      ]),
       _vm._v(" "),
-      _c("table", { staticClass: "table table-striped table-bordered" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Doc Cliente")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Cod Producto")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Valor")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Prioridad")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("1108456404")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("123456")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("10")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("200.000")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("baja")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("Pendiente")])
-          ])
+      _c("tbody", [
+        _c("tr", [
+          _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("1108456404")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("123456")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("10")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("200.000")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("baja")]),
+          _vm._v(" "),
+          _c("td", [_vm._v("Pendiente")])
         ])
       ])
     ])

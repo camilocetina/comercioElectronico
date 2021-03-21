@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,4 +19,5 @@ class AdminController extends Controller
         return response()->json(['success'=>200,'message'=>'Estas en la pagina de inicio']);
      
     }
+ 
 }
