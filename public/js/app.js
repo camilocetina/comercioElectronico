@@ -2111,6 +2111,13 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/pedidos', params).then(function (res) {
         _this5.orders = res.data;
       });
+    },
+    mensaje: function mensaje(id) {
+      if (id == 1) {
+        alert("Solicitud para abastecer producto");
+      } else {
+        alert("pedido enviado");
+      }
     }
   }
 });
@@ -21027,7 +21034,36 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(order.state))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(order.amount))])
+              _c("td", [
+                _vm._v(_vm._s(order.amount) + " "),
+                order.cant > order.amount
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.mensaje(1)
+                          }
+                        }
+                      },
+                      [_vm._v("Abastecer")]
+                    )
+                  : order.cant <= order.amount
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.mensaje(2)
+                          }
+                        }
+                      },
+                      [_vm._v("Entrgar")]
+                    )
+                  : _vm._e()
+              ])
             ])
           }),
           0
@@ -38751,8 +38787,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_0__["default"].Store({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Diego\Documents\Cetina\comercioElectronico\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Diego\Documents\Cetina\comercioElectronico\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\comercio\comercioElectronico\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\comercio\comercioElectronico\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

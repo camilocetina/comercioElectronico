@@ -24,12 +24,12 @@ class OrderQuery{
 
     public function getOrderAll()
     {
-        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
+        return $this->order->select('orders.id', 'orders.client_id','orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
     }
     
     public function getOrderById($id)
     {
-        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
+        return $this->order->select('orders.id', 'orders.client_id','orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
     }
 
     public function getOrderByIdOrDate($id,$date)
@@ -37,7 +37,7 @@ class OrderQuery{
         $newDate = Carbon::parse($date);
         $otherDate = $newDate->format("Y-m-d");
 
-        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->orWhere('dateDelivery','=',$otherDate)->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
+        return $this->order->select('orders.id', 'orders.client_id','orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->orWhere('dateDelivery','=',$otherDate)->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
 
      
 

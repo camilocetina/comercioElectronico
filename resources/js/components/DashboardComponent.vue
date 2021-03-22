@@ -46,7 +46,7 @@
             <td>{{order.dateDelivery}}</td>
             <td>{{order.priority}}</td>
             <td>{{order.state}}</td>
-             <td>{{order.amount}}</td>
+             <td>{{order.amount}} <button v-if="order.cant>order.amount"  v-on:click="mensaje(1)" class="btn btn-danger">Abastecer</button><button v-else-if="order.cant<=order.amount"   v-on:click="mensaje(2)"class="btn btn-primary">Entrgar</button></td>
           </tr>
         </tbody>
       </table>
@@ -153,6 +153,15 @@ export default {
         this.orders = res.data
       })
 
+    },
+
+    mensaje(id)
+    {
+        if(id ==1){
+        alert("Solicitud para abastecer producto")
+      }else{
+         alert("pedido enviado")
+      }
     }
     
   },
