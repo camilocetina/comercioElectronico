@@ -31,6 +31,15 @@ class OrderQuery{
     {
         return $this->order->where('id','LIKE','%'.$id.'%')->get();
     }
+
+    public function getOrderByIdOrDate($id,$date)
+    {
+        $newDate = Carbon::parse($date);
+        $otherDate = $newDate->format("Y-m-d");
+
+        return $this->order->where('id','LIKE','%'.$id.'%')->orWhere('dateDelivery','=',$otherDate)->get();
+
+    }
      public function getOrderByDate($date)
     {
 

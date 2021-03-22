@@ -31,11 +31,8 @@ Route::group(['namespace'=>'Api'],function(){
      * 
     */
     Route::post('admin','AdminController@index');
-<<<<<<< HEAD
 
-=======
-    Route::post('search','OrderController@searchOrderByIdOrDate');
->>>>>>> f9b096ac626b221ae7e6847fe9948a9fe79d77b6
+
 
 });
     /**
@@ -43,5 +40,9 @@ Route::group(['namespace'=>'Api'],function(){
      * Orders route
      * 
     */
+      //  Route::post('search','OrderController@searchOrderByIdOrDate');
+
     Route::post('pedidos','OrderController@getOrderByIdOrDate');
     Route::get('pedidos/todos','OrderController@getAllOrders');
+     Route::get('inventario/todos','InventoryController@getAllInventory');
+
