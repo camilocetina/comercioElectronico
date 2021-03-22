@@ -24,12 +24,12 @@ class OrderQuery{
 
     public function getOrderAll()
     {
-        return $this->order->all();
+        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
     }
     
     public function getOrderById($id)
     {
-        return $this->order->where('id','LIKE','%'.$id.'%')->get();
+        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
     }
 
     public function getOrderByIdOrDate($id,$date)
@@ -37,7 +37,9 @@ class OrderQuery{
         $newDate = Carbon::parse($date);
         $otherDate = $newDate->format("Y-m-d");
 
-        return $this->order->where('id','LIKE','%'.$id.'%')->orWhere('dateDelivery','=',$otherDate)->get();
+        return $this->order->select('orders.id', 'orders.product_id','orders.value','orders.cant','orders.dateDelivery','orders.priority',  'orders.state','inventories.amount')->where('orders.id','LIKE','%'.$id.'%')->orWhere('dateDelivery','=',$otherDate)->join('inventories', 'orders.product_id', '=', 'inventories.product_id')->get();
+
+     
 
     }
      public function getOrderByDate($date)

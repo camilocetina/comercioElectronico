@@ -33,6 +33,7 @@
             <th scope="col">Fecha de entrega</th>
             <th scope="col">Prioridad</th>
             <th scope="col">Estado</th>
+            <th scope="col">Productos disponible en inventario</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@
             <td>{{order.dateDelivery}}</td>
             <td>{{order.priority}}</td>
             <td>{{order.state}}</td>
+             <td>{{order.amount}}</td>
           </tr>
         </tbody>
       </table>
@@ -111,10 +113,11 @@ export default {
        axios.post("/api/pedidos",params)
         .then(res=>{
             this.orders = res.data;
+            console.log(res.data)
         }).catch(err =>{
             console.log(err)
         })
-        console.log(this.orders)
+        
     },
     
     searchOrder(){

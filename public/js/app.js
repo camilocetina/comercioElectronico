@@ -2013,6 +2013,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DashboardComponent",
   data: function data() {
@@ -2076,10 +2078,10 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post("/api/pedidos", params).then(function (res) {
         _this3.orders = res.data;
+        console.log(res.data);
       })["catch"](function (err) {
         console.log(err);
       });
-      console.log(this.orders);
     },
     searchOrder: function searchOrder() {
       this.getData.date_delivery = '';
@@ -21023,7 +21025,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(order.priority))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(order.state))])
+              _c("td", [_vm._v(_vm._s(order.state))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(order.amount))])
             ])
           }),
           0
@@ -21063,7 +21067,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Prioridad")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [
+          _vm._v("Productos disponible en inventario")
+        ])
       ])
     ])
   }

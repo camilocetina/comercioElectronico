@@ -12,7 +12,7 @@ $factory->define(Order::class, function (Faker $faker) {
         //
         
     		'client_id'  => Client::inRandomOrder()->value('id') ?: factory(Client::class),
-            'product_id'  => Client::inRandomOrder()->value('id') ?: factory(Product::class),
+            'product_id'  => Product::inRandomOrder()->value('id') ?: factory(Product::class),
             'value'      => $faker->randomNumber,
           	'cant'	     => $faker->numberBetween(1,49),
             'direction'  => $faker->address,
