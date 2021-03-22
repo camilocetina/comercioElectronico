@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="container">
-      <h3>Tabla de pedidos</h3>
+      <h3>Inventario</h3>
 
       <form class="form-inline my-2 my-lg-0">
         <input
@@ -17,36 +17,29 @@
           placeholder="Buscar por codigo"
           aria-label="Search"
           v-model="getData.id"
-          @keyup="searchOrder"
+          
         /> 
-        <input type="date" class="form-control" v-model="getData.date_delivery" @change="searchOrderByDate"/>
+        <input type="date" class="form-control" v-model="getData.date_delivery"/>
       </form>
       <br />
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col">id</th>
-            <th scope="col">Doc Cliente</th>
+        
             <th scope="col">Cod Producto</th>
             <th scope="col">Cantidad</th>
-            <th scope="col">Valor</th>
-            <th scope="col">Fecha de entrega</th>
-            <th scope="col">Prioridad</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Productos disponible en inventario</th>
+            
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(order, id) in orders" :key="id">
-            <th scope="row">{{order.id}}</th>
-            <td>{{order.client_id}}</td>
-            <td>{{order.product_id}}</td>
-            <td>{{order.cant}}</td>
-            <td>{{order.value}}</td>
-            <td>{{order.dateDelivery}}</td>
-            <td>{{order.priority}}</td>
-            <td>{{order.state}}</td>
-             <td>{{order.amount}}</td>
+          <tr v-for="(inventory, id) in inventorys" :key="id">
+            <th scope="row">{{inventory.id}}</th>
+          
+            <td>{{inventory.product_id}}</td>
+            <td>{{inventory.amount}}</td>
+            <td>{{inventory.value}}</td>
+           
           </tr>
         </tbody>
       </table>
@@ -56,7 +49,7 @@
 
 <script>
 export default {
-  name: "DashboardComponent",
+  name: "InventoryComponent",
 
   data() {
     return {
@@ -66,11 +59,11 @@ export default {
        },
         setTimeOutOrder: "",
         loading: true,
-        orders:[]
+        inventorys:[]
     };
   },
   mounted() {
-    this.uploadAllOrders();
+    this.uploadAllInventory();
  
     if (this.$store.state.token !== "") {
       axios
@@ -104,56 +97,20 @@ export default {
         });
     },
 
-    getOrders(){
-        // ,this.getData
-    const params = {
-        'id' : this.getData.id,
-        'date_delivery' : this.getData.date_delivery
-    }
-       axios.post("/api/pedidos",params)
-        .then(res=>{
-            this.orders = res.data;
-            console.log(res.data)
-        }).catch(err =>{
-            console.log(err)
-        })
-        
-    },
-    
-    searchOrder(){
-      this.getData.date_delivery = ''
-        clearTimeout( this.setTimeOutOrder )
-        this.setTimeOutOrder = setTimeout(this.getOrders,360)
-       
-
-
-    },
-    uploadAllOrders()
+   
+    uploadAllInventory()
     {
       let data;
-      axios.get('/api/pedidos/todos')
+      axios.get('/api/inventario/todos')
       .then(res =>{
         data = res.data
-        this.orders = data;
+        this.inventorys = data;
       })
       .catch(err =>{
         console.log(err)
       })
-    },
-    searchOrderByDate()
-    {
-       this.getData.id = ''
-      const params = {
-        'id' : this.getData.id,
-        'date_delivery' : this.getData.date_delivery
     }
-      console.log(params)
-      axios.post('/api/pedidos',params)
-      .then(res =>{
-        this.orders = res.data
-      })
-
-    }
+  
     
   },
 };

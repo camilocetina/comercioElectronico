@@ -4,6 +4,9 @@
         <div>
           <router-link to="/dashboard">Dashboard</router-link>
         </div>
+         <div>
+          <router-link to="/inventario">Inventario</router-link>
+        </div>
         <div>
             <button class="btn btn-info" @click.prevent="logout">Salir</button>
         </div>

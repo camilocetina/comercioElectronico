@@ -9,6 +9,8 @@ import RegisterComponent from './components/RegisterComponent'
 
 import DashboardComponent from './components/DashboardComponent'
 
+import InventarioComponent from './components/InventarioComponent'
+
 import Home from './components/Home'
 
 Vue.use(VueRouter);
@@ -29,6 +31,10 @@ export const routes = [
     {
         path: '/dashboard',
         component:DashboardComponent,
+    },
+    {
+        path: '/inventario',
+        component:InventarioComponent,
     },
     
 ];
