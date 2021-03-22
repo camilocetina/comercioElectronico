@@ -11,7 +11,7 @@ $factory->define(Inventory::class, function (Faker $faker) {
 
     	//
     	'product_id' =>Product::inRandomOrder()->value('id') ?: factory(Product::class),
-        'amount'      => $faker->numberBetween(1,102),
+        'amount'      => $faker->numberBetween(1,15),
     	 
         //
     ];
